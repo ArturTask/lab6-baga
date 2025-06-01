@@ -35,7 +35,7 @@ public class ScriptExecutor {
         URL resource = ScriptExecutor.class.getClassLoader().getResource(fileName);
         try {
             if (resource == null || !Files.exists(Paths.get(resource.toURI()))) {
-                System.out.println("Файл скрипта не найден: " + fileName);
+                oos.writeUTF("Файл скрипта не найден: " + fileName);
                 return;
             }
         } catch (URISyntaxException e) {
@@ -100,7 +100,7 @@ public class ScriptExecutor {
             URL resource = ScriptExecutor.class.getClassLoader().getResource(fileName);
             if (resource == null || !Files.exists(Paths.get(resource.toURI()))) {
                 System.out.println("Файл скрипта не найден: " + fileName);
-                return 0;
+                return 1; // return 1 line - message that file wasnt found∂
             }
 
             Scanner scanner = new Scanner(new File(resource.toURI()));
