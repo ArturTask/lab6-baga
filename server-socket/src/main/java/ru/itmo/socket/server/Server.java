@@ -1,14 +1,13 @@
 package ru.itmo.socket.server;
 
+import ru.itmo.socket.common.command.AppCommand;
 import ru.itmo.socket.common.dto.CommandDto;
 import ru.itmo.socket.common.exception.AppExitException;
 import ru.itmo.socket.common.util.SocketContext;
 import ru.itmo.socket.server.commands.ServerCommand;
 import ru.itmo.socket.server.commands.ServerCommandContext;
-import ru.itmo.socket.server.commands.impl.CommandHistory;
-import ru.itmo.socket.server.commands.impl.ExitCommand;
-import ru.itmo.socket.server.manager.LabWorkTreeSetManager;
-import ru.itmo.socket.server.manager.XmlCollectionLoader;
+import ru.itmo.socket.server.context.AppContext;
+import ru.itmo.socket.server.context.CommandHistory;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -20,9 +19,7 @@ import java.net.Socket;
 public class Server {
 
     public static void main(String[] args) {
-        // загружаем из файла collection.txt изначальные значения
-        LabWorkTreeSetManager manager = LabWorkTreeSetManager.getInstance();
-        new XmlCollectionLoader(manager, "collection.txt").load();
+        AppContext.loadContext("collection.txt");
 
         int port = SocketContext.getPort();
 
@@ -72,13 +69,12 @@ public class Server {
                 try {
                     // выполняем команду!
                     serverCommand.execute(oos, commandDto.getArg());
-                }
-                catch (AppExitException exitException) {
+                } catch (AppExitException exitException) {
                     // AppExitException бросается если команда ExitCommand
                     // (через Exception, потому что в скрипте может быть exit => надо обработать сразу же)
                     continueWorking = false;
                 }
-                CommandHistory.addCommand(commandName);
+                CommandHistory.addCommand(AppCommand.getByStringValue(commandName));
             } else {
                 System.out.println("Команда не найдена! Введите 'help' для получения списка команд.");
             }

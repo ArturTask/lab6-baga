@@ -2,9 +2,8 @@ package ru.itmo.socket.client;
 
 import ru.itmo.socket.client.command.ClientCommand;
 import ru.itmo.socket.client.command.ClientCommandContext;
-import ru.itmo.socket.client.command.impl.DisconnectClientCommand;
-import ru.itmo.socket.client.command.impl.ExitCommand;
 import ru.itmo.socket.common.dto.CommandDto;
+import ru.itmo.socket.common.exception.AppCommandNotFoundException;
 import ru.itmo.socket.common.util.SocketContext;
 
 import java.io.ObjectInputStream;
@@ -29,7 +28,7 @@ public class Client {
     }
 
     /**
-     * @return true - если любая команда кроме 'exit', false - если 'exit' и 'disconnect'
+     * @return true - если любая команда кроме 'exit', false - если 'exit'
      */
     private static boolean processRemoteCommand(Scanner scanner) throws InterruptedException {
         String host = SocketContext.getHost();
@@ -52,12 +51,6 @@ public class Client {
             // например при добавлении пользователя
             Optional<Object> clientCommandParam = clientCommand.preProcess(scanner);
 
-            // это если мы отключаемся от сервера - disconnect
-            // или выключаем и сервер и клиент!
-            if (clientCommand instanceof DisconnectClientCommand || clientCommand instanceof ExitCommand) {
-                continueWork = false;
-            }
-
             // добавляем доп аргументы если нужно к команде и отправляем на сервер
             Object arg = clientCommandParam.orElse(null);
             CommandDto request = new CommandDto(stringCommand, arg);
@@ -72,10 +65,10 @@ public class Client {
             for (int i = 0; i < responseQuantity; i++) {
                 String response = ois.readUTF();
                 System.out.println("Строка #" + (i + 1) + ": \n");
-                System.out.println("Получено от сервера: " + response);
+                System.out.println("Получено от сервера: \n" + response);
 
                 // если в скрипте на сервере будет exit, то он пришлет в сообщении AppExit
-                if (response.contains("AppExit") || response.contains("DisconnectClient")) {
+                if (response.contains("AppExit")) {
                     continueWork = false;
                     break;
                 }
@@ -83,8 +76,11 @@ public class Client {
         } catch (ConnectException cE) {
             System.err.println("Server unreachable, waiting for server to start...");
             Thread.sleep(5_000); // подождем перед повтором подключения
+        } catch (AppCommandNotFoundException appCommandNotFoundException) {
+            System.err.println("Ошибка клиента: " + appCommandNotFoundException.getMessage());
         } catch (Exception e) {
             System.err.println("Ошибка клиента: " + e.getMessage());
+            e.printStackTrace();
         }
         return continueWork;
     }

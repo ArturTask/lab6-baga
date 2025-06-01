@@ -1,22 +1,16 @@
 package ru.itmo.socket.server.commands.impl;
 
-import ru.itmo.socket.common.entity.Product;
 import ru.itmo.socket.server.commands.CommandHelper;
 import ru.itmo.socket.server.commands.ServerCommand;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
-public class AddCommand implements ServerCommand {
+public class RemoveAnyByPriceCommand implements ServerCommand {
 
     @Override
     public void execute(ObjectOutputStream oos, Object... args) throws IOException {
-        Product product = (Product) args[0];
-        CommandHelper.addProduct(oos, product);
-    }
-
-    @Override
-    public Class<?> getArgType() {
-        return Product.class;
+        double price = Double.parseDouble(String.valueOf(args[0]));
+        CommandHelper.removeAnyByPrice(oos, price);
     }
 }

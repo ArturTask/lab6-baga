@@ -7,11 +7,13 @@ import ru.itmo.socket.common.entity.Product;
 import java.util.Optional;
 import java.util.Scanner;
 
-public class AddCommand implements ClientCommand {
+public class UpdateCommand implements ClientCommand {
     @Override
     public Optional<Object> preProcess(Scanner scanner) {
-        System.out.println("Введите данные нового элемента:");
-        Product product = InputHelper.read(scanner);
+        Product product = InputHelper.readWithId(scanner);
         return Optional.of(product);
     }
 }
+
+
+

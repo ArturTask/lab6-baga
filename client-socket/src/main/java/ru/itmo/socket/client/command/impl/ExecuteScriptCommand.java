@@ -5,6 +5,9 @@ import ru.itmo.socket.client.command.ClientCommand;
 import java.util.Optional;
 import java.util.Scanner;
 
+/**
+ * Команда execute_script: запрашивает файл и передаёт его исполнение ScriptExecutor.
+ */
 public class ExecuteScriptCommand implements ClientCommand {
 
     @Override
@@ -14,3 +17,7 @@ public class ExecuteScriptCommand implements ClientCommand {
         return Optional.of(fileName);
     }
 }
+
+
+
+

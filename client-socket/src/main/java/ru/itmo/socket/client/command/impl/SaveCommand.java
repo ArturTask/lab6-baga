@@ -5,6 +5,9 @@ import ru.itmo.socket.client.command.ClientCommand;
 import java.util.Optional;
 import java.util.Scanner;
 
+/**
+ * Команда для сохранения коллекции LabWork в XML-файл.
+ */
 public class SaveCommand implements ClientCommand {
 
     @Override
@@ -14,3 +17,5 @@ public class SaveCommand implements ClientCommand {
         return Optional.of(fileName);
     }
 }
+
+

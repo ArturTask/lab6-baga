@@ -5,12 +5,11 @@ import ru.itmo.socket.client.command.ClientCommand;
 import java.util.Optional;
 import java.util.Scanner;
 
-public class RemoveByIdCommand implements ClientCommand {
-
+public class RemoveCommand implements ClientCommand {
     @Override
     public Optional<Object> preProcess(Scanner scanner) {
         System.out.print("Введите id элемента для удаления: ");
-        long id = Long.parseLong(scanner.nextLine().trim());
+        int id = Integer.parseInt(scanner.nextLine().trim());
         return Optional.of(id);
     }
 }

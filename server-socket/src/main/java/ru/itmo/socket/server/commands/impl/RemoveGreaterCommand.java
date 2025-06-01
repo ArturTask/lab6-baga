@@ -7,12 +7,12 @@ import ru.itmo.socket.server.commands.ServerCommand;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
-public class AddCommand implements ServerCommand {
+public class RemoveGreaterCommand implements ServerCommand {
 
     @Override
     public void execute(ObjectOutputStream oos, Object... args) throws IOException {
         Product product = (Product) args[0];
-        CommandHelper.addProduct(oos, product);
+        CommandHelper.removeGreater(oos, product);
     }
 
     @Override

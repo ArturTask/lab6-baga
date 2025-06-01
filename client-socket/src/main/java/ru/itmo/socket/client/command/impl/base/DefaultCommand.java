@@ -1,4 +1,4 @@
-package ru.itmo.socket.client.command.impl;
+package ru.itmo.socket.client.command.impl.base;
 
 import ru.itmo.socket.client.command.ClientCommand;
 
@@ -6,7 +6,7 @@ import java.util.Optional;
 import java.util.Scanner;
 
 /**
- *
+ * Command WITHOUT input (returns Optional.empty())
  */
 public class DefaultCommand implements ClientCommand {
 
