@@ -2,12 +2,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>ru.itmo.baga</groupId>
+        <groupId>ru.itmo.lena</groupId>
         <artifactId>lab6-sockets</artifactId>
         <version>1.0.0</version>
     </parent>
 
-    <groupId>ru.itmo.baga.common</groupId>
+    <groupId>ru.itmo.lena.common</groupId>
     <artifactId>common-socket</artifactId>
 
     <properties>

@@ -2,7 +2,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>ru.itmo.baga</groupId>
+  <groupId>ru.itmo.lena</groupId>
   <artifactId>lab6-sockets</artifactId>
 
   <version>1.0.0</version>
@@ -14,6 +14,7 @@
     <module>common-socket</module>
     <module>client-socket</module>
     <module>server-socket</module>
+    <module>lab5</module>
   </modules>
 
   <properties>
@@ -25,7 +26,7 @@
     <dependencies>
 
       <dependency>
-        <groupId>ru.itmo.baga.common</groupId>
+        <groupId>ru.itmo.lena.common</groupId>
         <artifactId>common-socket</artifactId>
         <version>1.0.0</version>
       </dependency>
