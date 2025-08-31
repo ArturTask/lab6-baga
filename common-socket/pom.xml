@@ -10,11 +10,4 @@
     <groupId>ru.itmo.lena.common</groupId>
     <artifactId>common-socket</artifactId>
 
-    <properties>
-
-    </properties>
-
-    <dependencies>
-    </dependencies>
-
 </project>

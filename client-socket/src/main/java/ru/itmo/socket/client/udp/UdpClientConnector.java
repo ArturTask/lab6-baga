@@ -82,6 +82,6 @@ public class UdpClientConnector implements AutoCloseable {
 
     @Override
     public void close() throws Exception {
-        socket.close();
+        finishSocketConnection();
     }
 }

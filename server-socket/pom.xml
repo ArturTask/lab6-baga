@@ -10,10 +10,6 @@
     <groupId>ru.itmo.lena.server</groupId>
     <artifactId>server-socket</artifactId>
 
-    <properties>
-
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>ru.itmo.lena.common</groupId>
