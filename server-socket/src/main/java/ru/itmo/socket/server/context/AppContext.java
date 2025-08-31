@@ -1,10 +1,8 @@
 package ru.itmo.socket.server.context;
 
-import ru.itmo.socket.common.entity.Product;
-import ru.itmo.socket.common.entity.UnitOfMeasure;
+import ru.itmo.socket.common.entity.City;
 
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -14,17 +12,18 @@ import java.util.*;
 public class AppContext {
     private static final LocalDateTime initializationTime = LocalDateTime.now();
 
-    private static List<Product> elements = new LinkedList<>();
+    private static List<City> elements = new ArrayList<>();
 
     // unused
-    private AppContext(){}
+    private AppContext() {
+    }
 
-    public static void info(ObjectOutputStream oos) throws IOException {
+    public static String info() throws IOException {
         StringBuilder sb = new StringBuilder();
         sb.append("Тип коллекции: " + elements.getClass().getName()).append(System.lineSeparator());
         sb.append("Дата инициализации: " + initializationTime).append(System.lineSeparator());
         sb.append("Количество элементов: " + elements.size()).append(System.lineSeparator());
-        oos.writeUTF(sb.toString());
+        return sb.toString();
     }
 
     public static void saveContext(String filename) {
@@ -42,55 +41,30 @@ public class AppContext {
     public static List<String> getAllElements() {
         return elements
                 .stream()
-                .map(Product::toString)
+                .map(City::toString)
                 .toList();
     }
 
     /**
-     * maps, filters not null, selects unique values and sort and gets string representation of them
-     */
-    public static List<String> getAllUniqueDescendingUnitOfMeasure() {
-        return elements
-                .stream()
-                .map(Product::getUnitOfMeasure)
-                .filter(Objects::nonNull)
-                .distinct()
-                .sorted(Comparator.reverseOrder())
-                .map(UnitOfMeasure::toString)
-                .toList();
-    }
-
-    /**
-     * @return String representation of element OR null if not found
-     */
-    public static String getFirst() {
-        if (elements.isEmpty()) {
-            return null;
-        } else {
-            return elements.get(0).toString();
-        }
-    }
-
-    /**
-     * @param product new product
+     * @param city new city
      * @return true if new object was added, false if object was already present
      */
-    public static boolean add(Product product) {
-        if (elements.contains(product)) {
+    public static boolean add(City city) {
+        if (elements.contains(city)) {
             return false;
         }
-        elements.add(product);
+        elements.add(city);
         Collections.sort(elements);
         return true;
     }
 
     /**
-     * @param product new product
+     * @param city new city
      * @return true if new object was added, false if object was not added
      */
-    public static boolean addIfMax(Product product) {
-        if (elements.isEmpty() || product.compareTo(elements.get(elements.size() - 1)) > 0) {
-            return add(product);
+    public static boolean addIfMin(City city) {
+        if (elements.isEmpty() || city.compareTo(elements.get(elements.size() - 1)) < 0) {
+            return add(city);
         }
         return false;
     }
@@ -104,43 +78,25 @@ public class AppContext {
     }
 
     /**
-     * @param product product smaller than the ones that need to be deleted
+     * @param city city greater than the ones that need to be deleted
      * @return number of deleted elements
      */
-    public static int removeAllGreaterThan(Product product) {
+    public static int removeAllLowerThan(City city) {
         int before = elements.size();
-        elements.removeIf(p -> p.compareTo(product) > 0);
+        elements.removeIf(p -> p.compareTo(city) < 0);
         int after = elements.size();
         return before - after;
     }
 
     /**
-     * @param price of product to delete
-     * @return id of deleted element OR null if none is found
-     */
-    public static Integer removeOneByPrice(Double price) {
-        Optional<Product> toRemove = elements.stream()
-                .filter(p -> Objects.equals(p.getPrice(), price))
-                .findFirst();
-
-        if (toRemove.isPresent()) {
-            Product productToDelete = toRemove.get();
-            elements.remove(productToDelete);
-            return productToDelete.getId();
-        }
-
-        return null;
-    }
-
-    /**
-     * @param updatedProduct product to update
+     * @param updatedCity city to update
      * @return true if object was updated, false if object wasn't found
      */
-    public static boolean updateEntity(Product updatedProduct) {
-        boolean found = remove(updatedProduct);
+    public static boolean updateEntity(City updatedCity) {
+        boolean found = remove(updatedCity);
 
         if (found) {
-            add(updatedProduct);
+            add(updatedCity);
         }
 
         return found;
@@ -156,11 +112,18 @@ public class AppContext {
 
 
     /**
-     * @param product product to remove
+     * @param city city to remove
      * @return true if object was deleted, false if object wasn't found
      */
-    private static boolean remove(Product product) {
-        return elements.remove(product);
+    private static boolean remove(City city) {
+        return elements.remove(city);
     }
 
+    public static long sumOfMeters() {
+        return elements.stream()
+                .map(City::getMetersAboveSeaLevel)
+                .filter(Objects::nonNull)
+                .mapToLong(Integer::longValue)
+                .sum();
+    }
 }

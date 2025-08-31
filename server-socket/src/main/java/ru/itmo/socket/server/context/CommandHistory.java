@@ -1,6 +1,7 @@
 package ru.itmo.socket.server.context;
 
 import ru.itmo.socket.common.command.AppCommand;
+import ru.itmo.socket.server.commands.ServerCommand;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -21,6 +22,12 @@ public class CommandHistory {
         }
         history.add(command);
     }
+
+    public static void addCommand(String command) {
+        addCommand(AppCommand.getByStringValue(command));
+    }
+
+
 
     public static List<AppCommand> getHistory() {
         return new ArrayList<>(history);

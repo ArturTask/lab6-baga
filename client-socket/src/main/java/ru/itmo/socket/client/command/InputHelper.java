@@ -4,6 +4,7 @@ package ru.itmo.socket.client.command;
 import ru.itmo.socket.common.entity.*;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -11,64 +12,178 @@ import java.util.Scanner;
  */
 public class InputHelper {
 
-    // собирает валидный Product для добавления (автогенерирует id)
-    public static Product read(Scanner scanner) {
+    // собирает валидный obj для добавления (автогенерирует id)
+    public static City read(Scanner scanner) {
         return readObject(scanner, false);
     }
 
-    // собирает валидный Product для добавления (автогенерирует id)
-    public static Product readWithId(Scanner scanner) {
+    // собирает валидный City для добавления (автогенерирует id)
+    public static City readWithId(Scanner scanner) {
         return readObject(scanner, true);
     }
 
-    // собирает валидный Product
-    private static Product readObject(Scanner scanner, boolean inputId) {
-        // generate default product
-        Product product = Product.generateDefaultWithoutId();
+    // собирает валидный City
+    private static City readObject(Scanner scanner, boolean inputId) {
+        // generate default city
+        City city = City.generateDefaultWithoutId();
 
 
         // generate id if not passed
         if (inputId) {
-            product.setId(inputId(scanner));
+            city.setId(inputId(scanner));
         } else {
-            product.setId(Product.generateId());
+            city.setId(City.getNextId());
         }
 
-        // suggest using default product
-        if (!isInputManually(scanner, product)) {
-            return product;
+        // suggest using default city
+        if (!isInputManually(scanner, city)) {
+            return city;
         }
 
-        product.setCreationDate(LocalDateTime.now());
+        city.setCreationDate(LocalDateTime.now());
 
-        product.setName(inputName(scanner));
-        product.setCoordinates(inputCoordinates(scanner));
-        product.setPrice(inputPrice(scanner));
-        product.setUnitOfMeasure(inputUnitOfMeasure(scanner));
-        product.setManufacturer(inputOrganization(scanner));
+        city.setName(inputName(scanner));
+        city.setCoordinates(inputCoordinates(scanner));
+        city.setCreationDate(LocalDateTime.now());
+        city.setArea(inputArea(scanner));
+        city.setPopulation(inputPopulation(scanner));
+        city.setMetersAboveSeaLevel(inputMetersAboveSeaLevel(scanner));
+        city.setCapital(inputCapital(scanner));
+        city.setGovernment(inputGovernment(scanner));
+        city.setStandardOfLiving(inputStandardOfLiving(scanner));
+        city.setGovernor(inputGovernor(scanner));
 
-        return product;
+        return city;
     }
 
-    private static boolean isInputManually(Scanner scanner, Product product) {
+    private static Human inputGovernor(Scanner scanner) {
+        while (true) {
+            try {
+                System.out.println("Введите рост губернатора (>0) или Enter чтобы пропустить: ");
+                String input = scanner.nextLine().trim();
+
+                if (input.isEmpty()) return null;
+
+                try {
+                    int height = Integer.parseInt(input);
+                    if (height <= 0) {
+                        System.out.println("Ошибка: Рост должен быть >0. Попробуйте еще раз.");
+                        continue;
+                    }
+                    return new Human(height, null);
+                } catch (NumberFormatException e) {
+                    System.out.println("Ошибка: Некорректный формат числа. Введите целое число >0.");
+                }
+            } catch (Exception e) {
+                System.out.println("Ошибка: " + e.getMessage());
+            }
+        }
+    }
+
+    private static StandardOfLiving inputStandardOfLiving(Scanner scanner) {
+        while (true) {
+            try {
+                System.out.println("Уровень жизни " + Arrays.toString(StandardOfLiving.values()) + " (опционально): ");
+                String input = scanner.nextLine().trim();
+                if (input.isEmpty()) return null;
+                try {
+                    return StandardOfLiving.valueOf(input.toUpperCase());
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Ошибка: Некорректный уровень жизни. Попробуйте еще раз.");
+                }
+            } catch (Exception e) {
+                System.out.println("Ошибка: " + e.getMessage());
+            }
+        }
+    }
+
+    private static Government inputGovernment(Scanner scanner) {
+        while (true) {
+            try {
+                System.out.println("Тип правительства " + Arrays.toString(Government.values()) + ":");
+                String input = scanner.nextLine().trim().toUpperCase();
+
+                if (input.isEmpty()) {
+                    System.out.println("Введите снова.");
+                    continue; // Пропускаем пустые вводы
+                }
+
+                return Government.valueOf(input);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Некорректный тип правительства. Попробуйте еще раз.");
+            }
+        }
+    }
+
+    private static Boolean inputCapital(Scanner scanner) {
+        while (true) {
+            try {
+                System.out.println("Является столицей (true/false): ");
+                String input = scanner.nextLine().trim();
+
+                if (input.equalsIgnoreCase("true")) return true;
+                if (input.equalsIgnoreCase("false")) return false;
+
+                System.out.println("Ошибка: Введите 'true' или 'false'.");
+            } catch (Exception e) {
+                System.out.println("Ошибка: " + e.getMessage());
+            }
+        }
+    }
+
+    private static Integer inputMetersAboveSeaLevel(Scanner scanner) {
+        System.out.println("Высота над уровнем моря (опционально): ");
+        while (true) {
+            String input = scanner.nextLine().trim();
+            if (input.isEmpty()) {
+                return 1;
+            }
+            try {
+                return Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                System.out.println("Некорректное целое число");
+            }
+        }
+    }
+
+    private static Long inputPopulation(Scanner scanner) {
+        while (true) {
+            System.out.print("Введите population объекта: ");
+            String input = scanner.nextLine().trim();
+            if (!input.isEmpty()) return Long.parseLong(input);
+            System.out.println("Ошибка: population не может быть пустым");
+        }
+    }
+
+    private static float inputArea(Scanner scanner) {
+        while (true) {
+            System.out.print("Введите area объекта: ");
+            String input = scanner.nextLine().trim();
+            if (!input.isEmpty()) return Float.parseFloat(input);
+            System.out.println("Ошибка: area не может быть пустым");
+        }
+    }
+
+
+    private static boolean isInputManually(Scanner scanner, City city) {
         System.out.println("Желаете Создать объект с нуля? (иначе будет взят объект по умолчанию) (y/n)");
-        System.out.println(product);
+        System.out.println(city);
         String isManually = scanner.nextLine().trim();
         return "y".equalsIgnoreCase(isManually);
     }
 
-    private static int inputId(Scanner scanner) {
+    private static long inputId(Scanner scanner) {
         while (true) {
-            System.out.print("Введите id продукта: ");
+            System.out.print("Введите id объекта: ");
             String input = scanner.nextLine().trim();
-            if (!input.isEmpty()) return Integer.parseInt(input);
+            if (!input.isEmpty()) return Long.parseLong(input);
             System.out.println("Ошибка: имя не может быть пустым");
         }
     }
 
     private static String inputName(Scanner scanner) {
         while (true) {
-            System.out.print("Введите название продукта: ");
+            System.out.print("Введите название объекта: ");
             String input = scanner.nextLine().trim();
             if (!input.isEmpty()) return input;
             System.out.println("Ошибка: имя не может быть пустым");
@@ -80,7 +195,7 @@ public class InputHelper {
         while (true) {
             try {
                 System.out.print("Введите координату X (x > -599): ");
-                double x = Double.parseDouble(scanner.nextLine());
+                int x = Integer.parseInt(scanner.nextLine());
                 if (x <= -599) throw new IllegalArgumentException();
                 coordinates.setX(x);
                 break;
@@ -91,7 +206,7 @@ public class InputHelper {
         while (true) {
             try {
                 System.out.print("Введите координату Y (y > -162): ");
-                float y = Float.parseFloat(scanner.nextLine());
+                int y = Integer.parseInt(scanner.nextLine());
                 if (y <= -162) throw new IllegalArgumentException();
                 coordinates.setY(y);
                 break;
@@ -117,71 +232,5 @@ public class InputHelper {
         }
     }
 
-    private static UnitOfMeasure inputUnitOfMeasure(Scanner scanner) {
-        System.out.println("Доступные единицы измерения:");
-        for (UnitOfMeasure u : UnitOfMeasure.values()) {
-            System.out.println("- " + u.name());
-        }
-        while (true) {
-            System.out.print("Введите единицу измерения (или оставьте пустым): ");
-            String input = scanner.nextLine().trim();
-            if (input.isEmpty()) return null;
-            try {
-                return UnitOfMeasure.valueOf(input.toUpperCase());
-            } catch (IllegalArgumentException e) {
-                System.out.println("Ошибка: неверное значение. Попробуйте снова.");
-            }
-        }
-    }
-
-    private static Organization inputOrganization(Scanner scanner) {
-        System.out.print("Хотите ввести производителя? (y/n): ");
-        String choice = scanner.nextLine().trim().toLowerCase();
-        if (!choice.equals("y")) return null;
-
-        Organization org = new Organization();
-        org.setId(Product.generateId());
-
-        // name
-        while (true) {
-            System.out.print("Введите имя организации: ");
-            String name = scanner.nextLine().trim();
-            if (!name.isEmpty()) {
-                org.setName(name);
-                break;
-            }
-            System.out.println("Ошибка: имя не может быть пустым");
-        }
-
-        // full name
-        while (true) {
-            System.out.print("Введите полное имя (или оставьте пустым): ");
-            String fullName = scanner.nextLine().trim();
-            if (fullName.length() > 1610) {
-                System.out.println("Ошибка: длина не должна превышать 1610 символов");
-            } else {
-                org.setFullName(fullName.isEmpty() ? null : fullName);
-                break;
-            }
-        }
-
-        // org type
-        System.out.println("Доступные типы организаций:");
-        for (OrganizationType type : OrganizationType.values()) {
-            System.out.println("- " + type.name());
-        }
-        while (true) {
-            System.out.print("Введите тип организации: ");
-            String input = scanner.nextLine().trim().toUpperCase();
-            try {
-                org.setType(OrganizationType.valueOf(input));
-                break;
-            } catch (IllegalArgumentException e) {
-                System.out.println("Ошибка: неправильный тип организации");
-            }
-        }
-
-        return org;
-    }
 }
 

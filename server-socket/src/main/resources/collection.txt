@@ -1,1 +1,0 @@
-[{"id":777,"name":"fromFile","coordinates":{"x":111.0,"y":111.0},"creationDate":"2025-06-01T01:38:09.384555","price":11.0,"unitOfMeasure":null,"manufacturer":null}]

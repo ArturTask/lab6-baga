@@ -1,16 +1,15 @@
 package ru.itmo.socket.server.commands.impl;
 
 import ru.itmo.socket.common.dto.ResponseDto;
-import ru.itmo.socket.server.commands.util.CommandHelper;
 import ru.itmo.socket.server.commands.ServerCommand;
 
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 
-public class HistoryCommand implements ServerCommand {
-
+public class PingCommand implements ServerCommand {
 
     @Override
     public ResponseDto execute(Object... args) throws IOException {
-        return CommandHelper.history();
+        return ResponseDto.ok("ping ok");
     }
 }

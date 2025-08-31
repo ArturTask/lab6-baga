@@ -1,7 +1,10 @@
 package ru.itmo.lena.ex.commands;
 
+import ru.itmo.lena.ex.entity.City;
 import ru.itmo.lena.ex.manager.CollectionManager;
 import ru.itmo.lena.ex.util.Console;
+
+import java.util.Objects;
 
 /**
  * Выводит сумму metersAboveSeaLevel всех элементов

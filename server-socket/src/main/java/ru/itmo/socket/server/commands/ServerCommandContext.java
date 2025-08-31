@@ -26,18 +26,15 @@ public class ServerCommandContext {
         result.put(SHOW, new ShowCommand());
         result.put(ADD, new AddCommand());
         result.put(UPDATE, new UpdateCommand());
-        result.put(REMOVE, new RemoveCommand());
+        result.put(REMOVE_BY_ID, new RemoveCommand());
         result.put(CLEAR, new ClearCommand());
-        result.put(SAVE, new SaveCommand());
         result.put(EXECUTE_SCRIPT, new ExecuteScriptCommand());
         result.put(EXIT, new ExitCommand());
-        result.put(HEAD, new HeadCommand());
-        result.put(ADD_IF_MAX, new AddIfMaxCommand());
-        result.put(REMOVE_GREATER, new RemoveGreaterCommand());
-        result.put(REMOVE_ANY_BY_PRICE, new RemoveAnyByPriceCommand());
-        result.put(PRINT_FIELD_DESCENDING_UNIT_OF_MEASURE, new PrintFieldDescendingUnitOfMeasureCommand());
         result.put(HISTORY, new HistoryCommand());
-
+        result.put(ADD_IF_MIN, new AddIfMinCommand());
+        result.put(REMOVE_LOWER, new RemoveLowerCommand());
+        result.put(SUM_OF_METERS_ABOVE_SEA_LEVEL, new SumOfMetersAboveSeaLevelCommand());
+        result.put(PING, new PingCommand());
         return result;
     }
 

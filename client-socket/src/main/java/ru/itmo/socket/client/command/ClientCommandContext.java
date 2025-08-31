@@ -28,18 +28,15 @@ public class ClientCommandContext {
         result.put(SHOW, new DefaultCommand());
         result.put(ADD, new AddCommand());
         result.put(UPDATE, new UpdateCommand());
-        result.put(REMOVE, new RemoveCommand());
+        result.put(REMOVE_BY_ID, new RemoveCommand());
         result.put(CLEAR, new DefaultCommand());
-        result.put(SAVE, new SaveCommand());
         result.put(EXECUTE_SCRIPT, new ExecuteScriptCommand());
         result.put(EXIT, new DefaultCommand());
-        result.put(HEAD, new DefaultCommand());
-        result.put(ADD_IF_MAX, new AddIfMaxCommand());
-        result.put(REMOVE_GREATER, new RemoveGreaterCommand());
-        result.put(REMOVE_ANY_BY_PRICE, new RemoveAnyByPriceCommand());
-        result.put(PRINT_FIELD_DESCENDING_UNIT_OF_MEASURE, new DefaultCommand());
         result.put(HISTORY, new DefaultCommand());
-
+        result.put(ADD_IF_MIN, new AddIfMinCommand());
+        result.put(REMOVE_LOWER, new RemoveLowerCommand());
+        result.put(SUM_OF_METERS_ABOVE_SEA_LEVEL, new DefaultCommand());
+        result.put(PING, new DefaultCommand());
         return result;
     }
 

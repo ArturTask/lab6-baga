@@ -12,22 +12,20 @@ import java.util.Arrays;
 @AllArgsConstructor
 @Getter
 public enum AppCommand {
-    HELP("help"), // : вывести справку по доступным командам
-    INFO("info"), // : вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)
-    SHOW("show"), // : вывести в стандартный поток вывода все элементы коллекции в строковом представлении
-    ADD("add"), // (element) : добавить новый элемент в коллекцию
-    UPDATE("update"), // {element_id) : обновить значение элемента коллекции, id которого равен заданному
-    REMOVE("remove"), // id: удалить элемент из коллекции по его id
-    CLEAR("clear"), // : очистить коллекцию
-    SAVE("save"), // : сохранить коллекцию в файл
-    EXECUTE_SCRIPT("execute_script"), // file_name : считать и исполнить скрипт из указанного файла. В скрипте содержатся команды в таком же виде, в котором их вводит пользователь в интерактивном режиме.
-    EXIT("exit"), // : завершить программу (без сохранения в файл)
-    HEAD("head"), // : вывести первый элемент коллекции
-    ADD_IF_MAX("add_if_max"), // (element) : добавить новый элемент в коллекцию, если его значение превышает значение наибольшего элемента этой коллекции
-    REMOVE_GREATER("remove_greater"), // (element) : удалить из коллекции все элементы, превышающие заданный
-    REMOVE_ANY_BY_PRICE("remove_any_by_price"), // price: удалить из коллекции один элемент, значение поля ргісе которого эквивалентно заданному
-    PRINT_FIELD_DESCENDING_UNIT_OF_MEASURE("print_field_descending_unit_of_measure"), //: вывести значения поля unitOfMeasure всех элементов в порядке убывания
-    HISTORY("history") // вывести историю запросов
+    HELP("help"),
+    INFO("info"),
+    SHOW("show"),
+    CLEAR("clear"),
+    EXIT("exit"),
+    ADD("add"),
+    UPDATE("update"),
+    REMOVE_BY_ID("remove_by_id"),
+    EXECUTE_SCRIPT("execute_script"),
+    HISTORY("history"),
+    ADD_IF_MIN("add_if_min"),
+    REMOVE_LOWER("remove_lower"),
+    SUM_OF_METERS_ABOVE_SEA_LEVEL("sum_of_meters_above_sea_level"),
+    PING("ping")
     ;
 
     private final String value;

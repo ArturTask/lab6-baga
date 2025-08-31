@@ -1,5 +1,5 @@
 show
-add {"id":12345,"name":"fromFile","coordinates":{"x":111.0,"y":111.0},"creationDate":"2025-06-01T01:38:09.384555","price":11.0,"unitOfMeasure":null,"manufacturer":null}
+add {"id": 1, "name": "Detroit-1", "coordinates": {"x": 1, "y": 1}, "creationDate": "2025-08-31T10:19:20.022666", "area": 1.0, "population": 1, "metersAboveSeaLevel": 10, "capital": true, "government": "DEMARCHY", "standardOfLiving": "MEDIUM", "governor": null}
 show
 help
 exit

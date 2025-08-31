@@ -6,11 +6,10 @@ import ru.itmo.socket.server.commands.ServerCommand;
 
 import java.io.IOException;
 
-public class HistoryCommand implements ServerCommand {
-
+public class SumOfMetersAboveSeaLevelCommand implements ServerCommand {
 
     @Override
     public ResponseDto execute(Object... args) throws IOException {
-        return CommandHelper.history();
+        return CommandHelper.sumOfMetersAboveSeaLevel();
     }
 }

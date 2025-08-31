@@ -1,5 +1,7 @@
 package ru.itmo.socket.server.commands;
 
+import ru.itmo.socket.common.dto.ResponseDto;
+
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 
@@ -7,14 +9,14 @@ import java.io.ObjectOutputStream;
  *
  */
 public interface ServerCommand {
-    void execute(ObjectOutputStream oos, Object... args) throws IOException;
 
     /**
-     * method returning number of lines to send (by some command) to client (1 by default)
+     * Executes server command, returns message if needed
+     *
+     * @param args arguments of this command
+     * @return message for client
      */
-    default int getNumberOfOutputLines(Object... args){
-        return 1;
-    }
+    ResponseDto execute(Object... args) throws IOException;
 
     /**
      *

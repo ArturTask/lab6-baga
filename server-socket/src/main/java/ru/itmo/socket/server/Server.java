@@ -63,7 +63,8 @@ public class Server {
                 // кидаем клиенту количество строк вывода (которое ему надо будет считать) из-за СКРИПТА (команда execute_script),
                 // потому что в скрипте может быть много команд :(
                 // у других команд по умолчанию - 1 строка вывода, можно если че переопределить для любой команды
-                int numberOfOutputLines = serverCommand.getNumberOfOutputLines(commandDto.getArg());
+//                int numberOfOutputLines = serverCommand.getNumberOfOutputLines(commandDto.getArg());
+                int numberOfOutputLines = 1;
                 oos.writeUTF(String.valueOf(numberOfOutputLines));
 
                 try {

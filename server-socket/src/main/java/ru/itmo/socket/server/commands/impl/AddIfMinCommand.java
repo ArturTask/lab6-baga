@@ -7,12 +7,13 @@ import ru.itmo.socket.server.commands.ServerCommand;
 
 import java.io.IOException;
 
-public class UpdateCommand implements ServerCommand {
+public class AddIfMinCommand implements ServerCommand {
 
     @Override
     public ResponseDto execute(Object... args) throws IOException {
         City city = (City) args[0];
-        return CommandHelper.updateCity(city);
+        // Если новый элемент больше максимального в коллекции, он будет добавлен.
+        return CommandHelper.addIfMin(city);
     }
 
     @Override
@@ -20,6 +21,4 @@ public class UpdateCommand implements ServerCommand {
         return City.class;
     }
 }
-
-
 
